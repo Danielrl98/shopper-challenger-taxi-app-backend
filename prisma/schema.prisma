@@ -12,3 +12,62 @@ datasource db {
   provider = "postgresql"
   url      = "postgresql://postgres:GbWcaESUHpleLXoGeyMQJUMMUvnDegqt@autorack.proxy.rlwy.net:46855/railway"
 }
+
+model Drivers {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  cars        String
+  stars       Float
+  rate        Float
+  min_km      Float
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now())
+
+  Reviews Reviews[]
+  Rides Rides[]
+}
+
+model Customers {
+  id          Int      @id @default(autoincrement())
+  name        String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now())
+
+  Rides Rides[]
+  Reviews Reviews[]
+}
+
+model Rides {
+  id          Int      @id @default(autoincrement())
+  id_customer Int
+  id_driver   Int
+  status      String
+  origin      String
+  amount      Int
+  destination String
+  distance    Float
+  duration    String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now())
+
+  driver     Drivers    @relation(fields: [id_driver], references: [id])
+  customer   Customers  @relation(fields: [id_customer], references: [id])
+
+  Reviews Reviews[]
+}
+
+model Reviews {
+  id          Int      @id @default(autoincrement())
+  id_driver   Int
+  id_ride     Int
+  id_customer Int
+  comment     String
+  stars       String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now())
+
+  driver     Drivers    @relation(fields: [id_driver], references: [id])
+  ride       Rides      @relation(fields: [id_ride], references: [id])
+  customer   Customers  @relation(fields: [id_customer], references: [id])
+}
