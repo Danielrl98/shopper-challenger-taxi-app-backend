@@ -1,0 +1,9 @@
+POST http://127.0.0.1:3000/ride/estimate
+Content-Type: application/json
+
+{
+  "id_customer": 1,
+  "id_driver": 1,
+  "origin": "rua narciso martins 80, barra do imbui",
+  "destination": "rua pastor cassiano 35, barra do imbui"
+}
