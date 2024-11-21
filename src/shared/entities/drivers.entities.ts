@@ -1,11 +1,11 @@
-export interface Drivers {
-  id: number;
+export interface IDrivers {
+  id?: number;
   name: string;
   description: string;
   car: string;
   stars: number;
-  tax: string
-  min_km: number
-  created_at: Date
-  updated_at: Date
+  tax: number;
+  min_km: number;
+  created_at?: Date;
+  updated_at?: Date;
 }
