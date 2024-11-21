@@ -18,3 +18,4 @@
     docker compose -f "postgres.yml" up -d 
 ```
 
+habilitar distancematrix api no google cloud
