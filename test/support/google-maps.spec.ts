@@ -1,12 +1,13 @@
+import { ICoordinates } from 'src/shared/entities';
 import { GoogleMaps } from '../../src/shared/libs/google-maps';
 import { Logger } from '@nestjs/common';
 
 const logger: Logger = new Logger();
 describe('Test integration google maps', () => {
   it('Should return coordinates', async () => {
-    const coordinates = await new GoogleMaps(logger).getAddressCoordinates(
+    const { coordinates } = (await new GoogleMaps(logger).getAddressCoordinates(
       'Rua Cosme Velho 513 – Cosme Velho',
-    );
+    )) as { coordinates: ICoordinates };
     logger.log(coordinates);
     expect(coordinates).toBeTruthy();
   });
