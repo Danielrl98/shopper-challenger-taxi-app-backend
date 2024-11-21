@@ -1,4 +1,9 @@
 export interface ICoordinates {
-  lat: string | number;
-  lng: string | number;
+  lat: number;
+  lng: number;
+}
+
+export interface ICalculatedMaps {
+  distance: number;
+  duration: string;
 }
