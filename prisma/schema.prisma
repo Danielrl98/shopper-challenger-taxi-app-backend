@@ -17,9 +17,9 @@ model Drivers {
   id          Int      @id @default(autoincrement())
   name        String
   description String
-  cars        String
+  car        String
   stars       Float
-  rate        Float
+  tax        Float
   min_km      Float
   created_at  DateTime @default(now())
   updated_at  DateTime @default(now())
@@ -42,7 +42,7 @@ model Rides {
   id          Int      @id @default(autoincrement())
   id_customer Int
   id_driver   Int
-  status      String
+  status      String    @default("pending")
   origin      String
   amount      Int
   destination String
@@ -63,7 +63,7 @@ model Reviews {
   id_ride     Int
   id_customer Int
   comment     String
-  stars       String
+  stars       Float
   created_at  DateTime @default(now())
   updated_at  DateTime @default(now())
 
