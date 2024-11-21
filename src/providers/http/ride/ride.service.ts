@@ -3,11 +3,8 @@ import { IRides } from 'src/shared/entities';
 
 @Injectable()
 export class RideService {
-
-    constructor(
-        private readonly logger: Logger,
-    ){ }
-    estimate(ride: IRides){
-        return ride
-    }
+  constructor(private readonly logger: Logger) {}
+  estimate(ride: IRides) {
+    return ride;
+  }
 }

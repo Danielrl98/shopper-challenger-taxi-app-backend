@@ -1,6 +1,7 @@
 import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
 import { IRides, StatusRides } from '../entities';
 import { Exclude } from 'class-transformer';
+import { IsDifferentFrom } from '../decatorators/isDiferentFrom';
 
 export class RidesDTO implements IRides {
   @IsNumber()
@@ -21,6 +22,7 @@ export class RidesDTO implements IRides {
   amount: number;
 
   @IsString()
+  @IsDifferentFrom('origin')
   destination: string;
 
   @Exclude()
