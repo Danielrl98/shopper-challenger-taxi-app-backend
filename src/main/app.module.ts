@@ -10,18 +10,21 @@ import {
 import { RideModule } from 'src/providers/http/ride/ride.module';
 import { Logger } from '@nestjs/common';
 import { config } from 'src/shared/config/env';
+import { GoogleMaps } from 'src/shared/libs/google-maps';
 
-const repositorys = [
+const injetable = [
   DriversRepository,
   CustomersRepository,
   RidesRepository,
   ReviewsRepository,
+  GoogleMaps,
+  Logger,
 ];
 
 @Global()
 @Module({
-  providers: [Logger, ...repositorys],
-  exports: [Logger, ...repositorys],
+  providers: injetable,
+  exports: injetable,
 })
 class GlobalModules {}
 
