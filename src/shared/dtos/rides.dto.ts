@@ -1,13 +1,14 @@
 import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
 import { IRides, StatusRides } from '../entities';
 import { Exclude } from 'class-transformer';
-import { IsDifferentFrom } from '../decatorators/isDiferentFrom';
+import { IsDifferentFrom } from '../decatorators';
 
 export class RidesDTO implements IRides {
   @IsNumber()
   id_customer: number;
 
   @IsNumber()
+  @IsOptional()
   id_driver: number;
 
   @IsEnum(StatusRides)
