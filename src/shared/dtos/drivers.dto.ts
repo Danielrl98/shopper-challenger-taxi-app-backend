@@ -1,36 +1,36 @@
-import { Exclude } from "class-transformer";
-import { Drivers } from "../entities";
-import { MaxLength, MinLength } from "class-validator";
+import { IDrivers } from '../entities';
+import { IsNumber, IsString, MaxLength, MinLength } from 'class-validator';
 
-export class DriversDTO implements Drivers {
+export class DriversDTO implements IDrivers {
+  @MinLength(5)
+  @MaxLength(30)
+  @IsString()
+  name: string;
 
-    @Exclude()
-    id: number;
-    
-    @MinLength(5)
-    @MaxLength(30)
-    name: string;
+  @MinLength(5)
+  @MaxLength(500)
+  @IsString()
+  description: string;
 
-    @MinLength(5)
-    @MaxLength(500)
-    description: string;
+  @MinLength(5)
+  @MaxLength(10)
+  @IsString()
+  car: string;
 
-    @MinLength(5)
-    @MaxLength(10)
-    car: string;
+  @IsString()
+  duration: string;
 
-    @MaxLength(5)
-    stars: number;
+  @MaxLength(5)
+  @IsNumber()
+  stars: number;
 
-    @MinLength(4)
-    tax: string;
+  @MinLength(3)
+  @IsNumber()
+  tax: number;
 
-    @MinLength(1)
-    min_km: number;
+  @IsNumber()
+  min_km: number;
 
-    @Exclude()
-    created_at: Date;
-
-    @Exclude()
-    updated_at: Date;
+  @IsNumber()
+  rate: number;
 }
