@@ -20,7 +20,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "seeder": "ts-node src/shared/infra/seeder.ts",
-    "postinstall": "npx prisma generate"
+    "postinstall": "npx prisma generate && npx prisma migrate deploy && npm run seeder"
   },
   "dependencies": {
     "@googlemaps/google-maps-services-js": "^3.4.0",
