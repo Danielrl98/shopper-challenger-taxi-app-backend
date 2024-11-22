@@ -18,7 +18,6 @@ model Drivers {
   name        String
   description String
   car        String
-  stars       Float
   tax        Float
   min_km      Float
   created_at  DateTime @default(now())
@@ -40,9 +39,8 @@ model Customers {
 
 model Rides {
   id          Int      @id @default(autoincrement())
-  id_customer Int
-  id_driver   Int
-  status      String    @default("pending")
+  customer_id Int
+  driver_id   Int
   origin      String
   amount      Int
   destination String
@@ -51,23 +49,23 @@ model Rides {
   created_at  DateTime @default(now())
   updated_at  DateTime @default(now())
 
-  driver     Drivers    @relation(fields: [id_driver], references: [id])
-  customer   Customers  @relation(fields: [id_customer], references: [id])
+  driver     Drivers    @relation(fields: [driver_id], references: [id])
+  customer   Customers  @relation(fields: [customer_id], references: [id])
 
   Reviews Reviews[]
 }
 
 model Reviews {
   id          Int      @id @default(autoincrement())
-  id_driver   Int
-  id_ride     Int
-  id_customer Int
+  driver_id   Int
+  ride_id     Int
+  customer_id Int
   comment     String
   stars       Float
   created_at  DateTime @default(now())
   updated_at  DateTime @default(now())
 
-  driver     Drivers    @relation(fields: [id_driver], references: [id])
-  ride       Rides      @relation(fields: [id_ride], references: [id])
-  customer   Customers  @relation(fields: [id_customer], references: [id])
+  driver     Drivers    @relation(fields: [driver_id], references: [id])
+  ride       Rides      @relation(fields: [ride_id], references: [id])
+  customer   Customers  @relation(fields: [customer_id], references: [id])
 }
