@@ -1,1 +1,1 @@
-export * from './customException'
+export * from './customException';
