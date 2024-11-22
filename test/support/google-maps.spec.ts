@@ -1,4 +1,4 @@
-import { ICoordinates } from 'src/shared/entities';
+import { ICoordinates } from '../../src/shared/entities';
 import { GoogleMaps } from '../../src/shared/libs/google-maps';
 import { Logger } from '@nestjs/common';
 
