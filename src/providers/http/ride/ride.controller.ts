@@ -1,6 +1,17 @@
-import { Body, Controller, Get, HttpCode, Param, Patch, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { RideService } from './ride.service';
 import { RidesDTO, RidesDTOConfirm } from '../../../shared/dtos/rides.dto';
+import { CustomException } from 'src/shared/common';
 
 @Controller('ride')
 export class RideController {
@@ -21,14 +32,33 @@ export class RideController {
   @Patch('confirm')
   @HttpCode(200)
   confirmRide(@Body() body: RidesDTOConfirm) {
-      return this.rideService.confirmRide(body);
-    }
+    return this.rideService.confirmRide(body);
+  }
 
   @Get(':customer_id')
-  listRides(@Param() param: { customer_id: string }, @Query() query: { driver_id: number}){
-    return {
-      param,
-      query
+  listRides(
+    @Param() param: { customer_id: number },
+    @Query() query: { driver_id: number },
+  ) {
+    if (isNaN(Number(param.customer_id))) {
+      throw new CustomException(
+        'customer_id must be a number',
+        HttpStatus.BAD_REQUEST,
+        'CUSTOMER_ID_INVALID',
+      );
     }
+
+    if (isNaN(Number(query.driver_id))) {
+      throw new CustomException(
+        'driver_id must be a number',
+        HttpStatus.BAD_REQUEST,
+        'DRIVER_ID_INVALID',
+      );
+    }
+
+    return this.rideService.listRides(
+      parseInt(param.customer_id.toString()),
+      parseInt(query.driver_id.toString()),
+    );
   }
 }

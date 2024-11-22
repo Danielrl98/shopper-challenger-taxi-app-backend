@@ -3,7 +3,12 @@ import { IRides } from '../../../shared/entities';
 import { IRideResponse } from './ride.interface';
 import { GoogleMaps } from '../../../shared/libs/google-maps';
 import { ICoordinates, ICalculatedMaps } from '../../../shared/entities';
-import { DriversRepository, RidesRepository, CustomersRepository, ReviewsRepository  } from '../../../shared/repository';
+import {
+  DriversRepository,
+  RidesRepository,
+  CustomersRepository,
+  ReviewsRepository,
+} from '../../../shared/repository';
 import { GeocodeResult } from '@googlemaps/google-maps-services-js';
 import { CustomException } from '../../../shared/common';
 import { RidesDTOConfirm } from '../../../shared/dtos';
@@ -134,6 +139,59 @@ export class RideService {
 
     return {
       success: true,
+    };
+  }
+
+  async listRides(customer_id: number, driver_id: number) {
+    const driver = await this.driversRepository.findDriverById(driver_id);
+
+    if (!driver) {
+      throw new CustomException(
+        'confirm ride error',
+        HttpStatus.NOT_FOUND,
+        'DRIVER_NOT_FOUND',
+      );
+    }
+
+    const customer =
+      await this.customersRepository.getCustomerById(customer_id);
+
+    if (!customer) {
+      throw new CustomException(
+        'confirm ride error',
+        HttpStatus.NOT_FOUND,
+        'CUSTOMER_NOT_FOUND',
+      );
+    }
+
+    const allRides =
+    await this.ridesRepository.findManyRides(driver_id, customer_id);
+
+    if(allRides.length ===0) {
+      new CustomException("no rides found", HttpStatus.NOT_FOUND, "NO_RIDES_FOUND")
+    }
+
+    const rides = []
+
+    for(const ride of allRides) {
+      rides.push({
+        id: ride.id,
+        date: ride.created_at,
+        origin: ride.origin,
+        destination: ride.destination,
+        distance: ride.distance,
+        duration: ride.duration,
+        driver: {
+          id: driver.id,
+          name: driver.name,
+        },
+        value: ride.amount,
+      })
+    }
+
+    return {
+      customer_id: customer.id,
+      rides: rides,
     };
   }
 }
