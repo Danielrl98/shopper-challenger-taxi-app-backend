@@ -3,7 +3,6 @@ export interface IDrivers {
   name: string;
   description: string;
   car: string;
-  stars: number;
   tax: number;
   min_km: number;
   created_at?: Date;

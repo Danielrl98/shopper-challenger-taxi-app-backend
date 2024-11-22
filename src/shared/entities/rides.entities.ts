@@ -1,14 +1,7 @@
-export enum StatusRides {
-  PENDING = 'pending',
-  PROGRESSING = 'progressing',
-  COMPLETED = 'completed',
-}
-
 export interface IRides {
   id?: number;
-  id_driver: number;
-  id_customer: number;
-  status: string;
+  driver_id: number;
+  customer_id: number;
   origin: string;
   amount: number;
   destination: string;

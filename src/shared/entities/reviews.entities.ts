@@ -1,8 +1,8 @@
 export class IReviews {
   id?: number;
-  id_driver: number;
-  id_ride: number;
-  id_customer: number;
+  driver_id: number;
+  ride_id: number;
+  customer_id: number;
   comment: string;
   stars: number;
   created_at?: Date;
