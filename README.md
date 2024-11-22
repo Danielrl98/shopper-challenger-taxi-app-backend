@@ -1,21 +1,33 @@
-### instalaçao docker
+## Introdução
 
-```
-    docker rm -f nodejs
-    docker compose build --no-cache
-    docker compose up -d 
-```
+Projeto taxi-app para o processo seletivo da shopper.com.br.
 
-### Rodar migrations do prisma
+### instalaçao 
 
-```
-    docker exec nodejs npx prisma migrate deploy
-```
-### instalaçao isolada postgres
+Você precisará ter o GIT instalado na sua máquina, e, após isso, clonar este repositório:
 
-```
-    docker rm -postgres
-    docker compose -f "postgres.yml" up -d 
+```sh
+   git clone https://github.com/Danielrl98/shopper-challenger-taxi-app-backend.git
 ```
 
-habilitar distancematrix api no google cloud
+```sh
+   cd shopper-challenger-taxi-app-backend
+```
+
+Você precisará ter o Docker e Docker compose na sua máquina, após isso, executar o comando na pasta raiz do projeto
+
+```
+    docker compose up
+```
+
+### Requisitos
+
+habilitar "Google maps Api" no google cloud
+
+habilitar "Distance Matrix Api" no google cloud
+
+### Estrutura do banco de dados
+
+![Exemplo de Imagem](./drawSQL.png)
+
+
