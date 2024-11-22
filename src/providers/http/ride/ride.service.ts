@@ -3,13 +3,10 @@ import { IRides } from '../../../shared/entities';
 import { IRideResponse } from './ride.interface';
 import { GoogleMaps } from '../../../shared/libs/google-maps';
 import { ICoordinates, ICalculatedMaps } from '../../../shared/entities';
-import { DriversRepository } from '../../../shared/repository/drivers.repository';
+import { DriversRepository, RidesRepository, CustomersRepository, ReviewsRepository  } from '../../../shared/repository';
 import { GeocodeResult } from '@googlemaps/google-maps-services-js';
 import { CustomException } from '../../../shared/common';
-import { RidesDTOConfirm } from 'src/shared/dtos/rides.dto';
-import { RidesRepository } from '../../../shared/repository/rides.repository';
-import { ReviewsRepository } from '../../../shared/repository';
-import { CustomersRepository } from '../../../shared/repository/customers.repository';
+import { RidesDTOConfirm } from '../../../shared/dtos';
 
 @Injectable()
 export class RideService {

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Param, Patch, Post, Query } from '@nestjs/common';
 import { RideService } from './ride.service';
 import { RidesDTO, RidesDTOConfirm } from '../../../shared/dtos/rides.dto';
 
@@ -14,13 +14,21 @@ export class RideController {
   }
   @Post('estimate')
   @HttpCode(200)
-  async createRide(@Body() body: RidesDTO) {
+  createRide(@Body() body: RidesDTO) {
     return this.rideService.createRide(body);
   }
 
   @Patch('confirm')
   @HttpCode(200)
-  async confirmRide(@Body() body: RidesDTOConfirm) {
-    return this.rideService.confirmRide(body);
+  confirmRide(@Body() body: RidesDTOConfirm) {
+      return this.rideService.confirmRide(body);
+    }
+
+  @Get(':customer_id')
+  listRides(@Param() param: { customer_id: string }, @Query() query: { driver_id: number}){
+    return {
+      param,
+      query
+    }
   }
 }
