@@ -7,7 +7,7 @@ import {
   RidesRepository,
   ReviewsRepository,
 } from '../shared/repository';
-import { RideModule } from '../providers/http/ride/ride.module';
+import { RideModule } from '../providers';
 import { Logger } from '@nestjs/common';
 import { config } from '../shared/config/env';
 import { GoogleMaps } from '../shared/libs/google-maps';
