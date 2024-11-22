@@ -3,13 +3,13 @@ import { IReviews } from '../entities';
 
 export class ReviewsDTO implements IReviews {
   @IsNumber()
-  id_driver: number;
+  driver_id: number;
 
   @IsNumber()
-  id_ride: number;
+  ride_id: number;
 
   @IsNumber()
-  id_customer: number;
+  customer_id: number;
 
   @IsString()
   @MinLength(5)

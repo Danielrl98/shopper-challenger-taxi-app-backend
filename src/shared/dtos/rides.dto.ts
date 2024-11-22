@@ -1,19 +1,21 @@
-import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
-import { IRides, StatusRides } from '../entities';
-import { Exclude } from 'class-transformer';
+import {
+  IsNumber,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
+import { IRides } from '../entities';
+import { Type } from 'class-transformer';
 import { IsDifferentFrom } from '../decatorators';
+import { DriversDTO } from './';
 
 export class RidesDTO implements IRides {
   @IsNumber()
-  id_customer: number;
+  customer_id: number;
 
   @IsNumber()
   @IsOptional()
-  id_driver: number;
-
-  @IsEnum(StatusRides)
-  @IsOptional()
-  status: StatusRides;
+  driver_id: number;
 
   @IsString()
   origin: string;
@@ -26,9 +28,24 @@ export class RidesDTO implements IRides {
   @IsDifferentFrom('origin')
   destination: string;
 
-  @Exclude()
+  @IsOptional()
+  @IsNumber()
   distance: number;
 
-  @Exclude()
+  @IsOptional()
+  @IsString()
   duration: string;
+}
+
+export class RidesDTOConfirm extends RidesDTO {
+  constructor() {
+    super();
+  }
+
+  @IsNumber()
+  value: number;
+
+  @ValidateNested()
+  @Type(() => DriversDTO)
+  driver: DriversDTO;
 }
