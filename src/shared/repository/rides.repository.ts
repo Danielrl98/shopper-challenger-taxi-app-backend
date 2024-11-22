@@ -13,20 +13,9 @@ export class RidesRepository {
 
     return await prisma.rides.create({
       data,
-      include: { customer: true, driver: true },
+      // include: { customer: true, driver: true },
     });
   }
-  async updateRide(ride: IRides): Promise<IRides> {
-    return await prisma.rides.update({
-      where: { id: ride.id },
-      data: {
-        status: ride.status,
-        updated_at: new Date(),
-      },
-      include: { customer: true, driver: true },
-    });
-  }
-
   async findManyRides(): Promise<IRides[]> {
     return await prisma.rides.findMany({
       include: { customer: true, driver: true },

@@ -27,10 +27,10 @@ export class ReviewsRepository {
       },
     });
   }
-  async findOneReview(rideId: number): Promise<IReviews> {
+  async findFirstReview(driverId: number): Promise<IReviews> {
     return await prisma.reviews.findFirst({
       where: {
-        id: rideId,
+        driver_id: driverId,
       },
       include: {
         driver: true,
