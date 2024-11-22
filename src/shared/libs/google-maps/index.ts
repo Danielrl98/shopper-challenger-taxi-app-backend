@@ -1,10 +1,8 @@
-import {
-  Client,
-  GeocodeResult,
-} from '@googlemaps/google-maps-services-js';
+import { Client, GeocodeResult } from '@googlemaps/google-maps-services-js';
 import { config } from '../../../shared/config/env';
-import { ICoordinates, ICalculatedMaps } from 'src/shared/entities';
-import { Logger } from '@nestjs/common';
+import { ICoordinates, ICalculatedMaps } from '../../../shared/entities';
+import { HttpStatus, Logger } from '@nestjs/common';
+import { CustomException } from '../../../shared/common';
 
 const client = new Client({});
 
@@ -21,9 +19,12 @@ export class GoogleMaps {
         response: GeocodeResult;
       };
     } catch (error) {
-      this.Logger.error('Err', error);
+      throw new CustomException(
+        error?.message ?? 'error route',
+        HttpStatus.BAD_REQUEST,
+        'ROUTE_NOT_FOUND',
+      );
     }
-    return false;
   }
 
   async calculateTravelTime(
@@ -48,17 +49,19 @@ export class GoogleMaps {
 
       return { distance, duration: this.formatToHours(duration) };
     } catch (error) {
-      this.Logger.error('Err', error);
+      throw new CustomException(
+        error?.message ?? 'error route',
+        HttpStatus.BAD_REQUEST,
+        'ROUTE_NOT_FOUND',
+      );
     }
-
-    return false;
   }
-  private formatToHours(decimal: string) { 
-    const hours = Math.floor(parseFloat(decimal)); 
-    const minutes = Math.round((parseFloat(decimal) - hours) * 60); 
-    if(hours === 0){
-      return `${minutes} minutos`; 
+  private formatToHours(decimal: string) {
+    const hours = Math.floor(parseFloat(decimal));
+    const minutes = Math.round((parseFloat(decimal) - hours) * 60);
+    if (hours === 0) {
+      return `${minutes}min`;
     }
-    return `${hours} horas e ${minutes} minutos`; 
+    return `${hours}h e ${minutes}min`;
   }
 }
