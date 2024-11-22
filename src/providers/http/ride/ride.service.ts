@@ -1,11 +1,15 @@
 import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
-import { IRides } from 'src/shared/entities';
+import { IRides } from '../../../shared/entities';
 import { IRideResponse } from './ride.interface';
 import { GoogleMaps } from '../../../shared/libs/google-maps';
-import { ICoordinates, ICalculatedMaps } from 'src/shared/entities';
+import { ICoordinates, ICalculatedMaps } from '../../../shared/entities';
 import { DriversRepository } from '../../../shared/repository/drivers.repository';
 import { GeocodeResult } from '@googlemaps/google-maps-services-js';
-import { CustomException } from 'src/shared/common';
+import { CustomException } from '../../../shared/common';
+import { RidesDTOConfirm } from 'src/shared/dtos/rides.dto';
+import { RidesRepository } from '../../../shared/repository/rides.repository';
+import { ReviewsRepository } from '../../../shared/repository';
+import { CustomersRepository } from '../../../shared/repository/customers.repository';
 
 @Injectable()
 export class RideService {
@@ -13,8 +17,11 @@ export class RideService {
     private readonly logger: Logger,
     private readonly googleMaps: GoogleMaps,
     private readonly driversRepository: DriversRepository,
+    private readonly ridesRepository: RidesRepository,
+    private readonly reviewsRepository: ReviewsRepository,
+    private readonly customersRepository: CustomersRepository,
   ) {}
-  async estimate(ride: IRides): Promise<IRideResponse | HttpException> {
+  async createRide(ride: IRides): Promise<IRideResponse | HttpException> {
     const startCoordinates = (await this.googleMaps.getAddressCoordinates(
       ride.origin,
     )) as { coordinates: ICoordinates; response: GeocodeResult };
@@ -30,7 +37,11 @@ export class RideService {
     const drivers = await this.driversRepository.findManyIDrivers();
 
     if (drivers.length === 0) {
-      throw new CustomException('No drivers register', HttpStatus.BAD_REQUEST);
+      throw new CustomException(
+        'No drivers register',
+        HttpStatus.BAD_REQUEST,
+        'DRIVER_NOT_FOUND',
+      );
     }
 
     const driverFilter = drivers.filter(
@@ -40,20 +51,23 @@ export class RideService {
     if (driverFilter.length === 0) {
       throw new CustomException(
         'no Drivers available on this route',
-        HttpStatus.BAD_REQUEST,
+        HttpStatus.NOT_ACCEPTABLE,
+        'INVALID_DISTANCE',
       );
     }
 
     const driver = driverFilter[0];
 
-    let valueRide = driver.tax
+    let valueRide = driver.tax;
 
-    for (let i = 0; i <  calculateDistance.distance ;i  ++) {
-        if(i % 5 === 0){
-          valueRide = valueRide + 3.00
-        }
+    for (let i = 0; i < calculateDistance.distance; i++) {
+      if (i % 5 === 0) {
+        valueRide = valueRide + 3.0;
+      }
     }
-  
+
+    const review = await this.reviewsRepository.findFirstReview(driver.id);
+
     const response: IRideResponse = {
       origin: {
         latitude: startCoordinates.coordinates.lat,
@@ -72,8 +86,8 @@ export class RideService {
           description: driver.description,
           vehicle: driver.car,
           review: {
-            rating: driver.stars,
-            comment: driver.description,
+            rating: review.stars ?? 0,
+            comment: review.comment ?? '',
           },
           value: valueRide,
         },
@@ -86,4 +100,43 @@ export class RideService {
     return response;
   }
 
+  async confirmRide(body: RidesDTOConfirm) {
+    const drivers = await this.driversRepository.findDriverById(body.driver.id);
+
+    if (!drivers) {
+      throw new CustomException(
+        'confirm ride error',
+        HttpStatus.NOT_FOUND,
+        'DRIVER_NOT_FOUND',
+      );
+    }
+
+    const customer = await this.customersRepository.getCustomerById(
+      body.customer_id,
+    );
+
+    if (!customer) {
+      throw new CustomException(
+        'confirm ride error',
+        HttpStatus.NOT_FOUND,
+        'CUSTOMER_NOT_FOUND',
+      );
+    }
+
+    const result = await this.ridesRepository.createRide({
+      driver_id: body.driver.id,
+      customer_id: body.customer_id,
+      origin: body.origin,
+      amount: body.value,
+      destination: body.destination,
+      distance: body.distance,
+      duration: body.duration,
+    });
+
+    this.logger.debug(result);
+
+    return {
+      success: true,
+    };
+  }
 }
