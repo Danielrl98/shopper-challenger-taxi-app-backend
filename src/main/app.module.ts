@@ -6,11 +6,11 @@ import {
   CustomersRepository,
   RidesRepository,
   ReviewsRepository,
-} from 'src/shared/repository';
-import { RideModule } from 'src/providers/http/ride/ride.module';
+} from '../shared/repository';
+import { RideModule } from '../providers/http/ride/ride.module';
 import { Logger } from '@nestjs/common';
-import { config } from 'src/shared/config/env';
-import { GoogleMaps } from 'src/shared/libs/google-maps';
+import { config } from '../shared/config/env';
+import { GoogleMaps } from '../shared/libs/google-maps';
 
 const injetable = [
   DriversRepository,
