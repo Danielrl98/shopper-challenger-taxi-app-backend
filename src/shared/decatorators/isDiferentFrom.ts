@@ -8,7 +8,7 @@ import {
 
 @ValidatorConstraint({ async: false })
 class IsDifferentFromConstraint implements ValidatorConstraintInterface {
-  validate(value: any, args: ValidationArguments) {
+  validate(value: unknown, args: ValidationArguments) {
     const [relatedPropertyName] = args.constraints;
     const relatedValue = args.object[relatedPropertyName];
     return value !== relatedValue;
@@ -24,7 +24,7 @@ export function IsDifferentFrom(
   property: string,
   validationOptions?: ValidationOptions,
 ) {
-  return function (object: Object, propertyName: string) {
+  return function (object: { constructor: Function }, propertyName: string) {
     registerDecorator({
       target: object.constructor,
       propertyName: propertyName,

@@ -1,1 +1,1 @@
-export * from './isDiferentFrom'
+export * from './isDiferentFrom';
