@@ -1,23 +1,31 @@
 services:
-  nodejs:
-    build: .
-    command: npm run start
-    container_name: nest
-    volumes:
-      - ".:/var/www/app"
-    ports:
-      - "8070:3000"
-    depends_on:
-      - postgres
-
   postgres:
-    image: postgres:15.3-alpine
+    image: postgres
     container_name: postgres
     restart: always
     environment:
-      POSTGRES_DB_HOST: "localhost"
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
     ports:
       - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  nodejs:
+    depends_on:
+        - postgres
+    build: 
+      context: . 
+      dockerfile: Dockerfile
+    container_name: nestjs
+    volumes:
+      - ".:/var/www"
+    ports:
+      - "8090:3000"
+    command: >
+      sh -c "npm install; npm run start"
+  
+volumes:
+  pgdata:
+      

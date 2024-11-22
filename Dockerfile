@@ -1,17 +1,13 @@
-FROM node:20-alpine
+FROM node:18-alpine
 
-WORKDIR /var/www/app
+WORKDIR /var/www
 
 COPY package*.json ./
 
-RUN npm install
+COPY . .
+
+RUN npm install -g npm@latest
 
 RUN npm install -g @nestjs/cli
 
-COPY . .
-
-EXPOSE 8070
-
-EXPOSE 5432
-
-CMD ["npm", "run", "start"]
+EXPOSE 8090
