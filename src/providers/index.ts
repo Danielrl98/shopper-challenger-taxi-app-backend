@@ -1,1 +1,1 @@
-export * from './http/ride/ride.module'
+export * from './http/ride/ride.module';

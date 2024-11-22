@@ -11,8 +11,8 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = "postgresql://postgres:postgres@postgres:5432/postgres?schema=public"
-   //url      = "postgresql://postgres:GbWcaESUHpleLXoGeyMQJUMMUvnDegqt@autorack.proxy.rlwy.net:46855/railway"
+  // url = "postgresql://postgres:postgres@postgres:5432/postgres?schema=public"
+  url      = "postgresql://postgres:GbWcaESUHpleLXoGeyMQJUMMUvnDegqt@autorack.proxy.rlwy.net:46855/railway"
 }
 
 model Drivers {
