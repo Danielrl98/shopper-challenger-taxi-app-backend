@@ -51,4 +51,12 @@ describe('RideController test', () => {
 
     return result;
   });
+
+  it('/GET list rides, should return status 200', async () => {
+    const result = request(app.getHttpServer())
+      .get('/ride/2?=driver_id=2')
+      .expect(200)
+
+    return result;
+  });
 });
