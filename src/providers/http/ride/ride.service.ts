@@ -58,9 +58,9 @@ export class RideService {
       );
     }
 
-    const optionsDrivers = []
+    const optionsDrivers = [];
 
-    for(const driver of driverFilter) {
+    for (const driver of driverFilter) {
       let valueRide = driver.tax;
 
       for (let i = 0; i < calculateDistance.distance; i++) {
@@ -68,10 +68,12 @@ export class RideService {
           valueRide = valueRide + 3.0;
         }
       }
-  
+
       const review = await this.reviewsRepository.findFirstReview(driver.id);
 
-      optionsDrivers.push( {
+      if (!review) continue;
+
+      optionsDrivers.push({
         id: driver.id,
         name: driver.name,
         description: driver.description,
@@ -81,7 +83,7 @@ export class RideService {
           comment: review.comment ?? '',
         },
         value: valueRide,
-      },)
+      });
     }
 
     const response: IRideResponse = {

@@ -7,11 +7,6 @@ export class ReviewsRepository {
   async createReview(review: IReviews): Promise<IReviews> {
     return await prisma.reviews.create({
       data: review,
-      include: {
-        driver: true,
-        ride: true,
-        customer: true,
-      },
     });
   }
 
@@ -20,22 +15,12 @@ export class ReviewsRepository {
       where: {
         id: rideId,
       },
-      include: {
-        driver: true,
-        ride: true,
-        customer: true,
-      },
     });
   }
   async findFirstReview(driverId: number): Promise<IReviews> {
     return await prisma.reviews.findFirst({
       where: {
         driver_id: driverId,
-      },
-      include: {
-        driver: true,
-        ride: true,
-        customer: true,
       },
     });
   }
