@@ -104,7 +104,7 @@ retorno esperado:
 
 ### GET /ride/{customer_id}?driver_id={id do motorista}
 
-Descrição: Responsável por lista todas as corridas
+Descrição: Responsável por listar todas as corridas
 
 Retorno esperado:
 
