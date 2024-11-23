@@ -190,7 +190,7 @@ export class RideService {
     }
 
     if (rides.length === 0) {
-      new CustomException(
+      throw new CustomException(
         'no rides found',
         HttpStatus.NOT_FOUND,
         'NO_RIDES_FOUND',
