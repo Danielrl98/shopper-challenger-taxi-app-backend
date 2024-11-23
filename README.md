@@ -34,4 +34,87 @@ GOOGLE_API_KEY
 
 ![Exemplo de Imagem](./drawSQL.png)
 
+### Endpoints
 
+POST /ride/estimate
+
+Descrição: Calcula a rota de um ponto ao outro e retorna os detalhes da corrida.
+
+corpo da requisição:
+
+{
+   customer_id: number,
+   origin: string,
+   destination: string,
+}
+
+retorno esperado:
+
+{
+   customer_id: string,
+   rides: [
+      {
+         id: number,
+         date: datetime,
+         origin: string,
+         destination: string,
+         distance: number,
+         duration: string,
+         driver: {
+            id: number,
+            name: string
+         },
+         value": number
+      }
+   ]
+}
+
+PATCH /ride/confirm
+
+Descrição: Responsável por confirmar a corrida
+
+corpo da requisição:
+
+{
+   customer_id: string,
+   origin: string,
+   destination: string,
+   distance: number,
+   duration: string,
+   driver: {
+      id: number,
+      name: string
+   },
+   value: number
+}
+
+retorno esperado:
+
+{
+   success: true
+}
+
+GET /ride/{customer_id}?driver_id={id do motorista}
+
+Descrição: Responsável por lista todas as corridas
+
+Retorno esperado:
+
+{
+   customer_id: string,
+   rides: [
+      {
+         id: number,
+         date: datetime,
+         origin: string,
+         destination: string,
+         distance: number,
+         duration: string,
+         driver: {
+            id: number,
+            name: string
+         },
+         value: number
+      }
+   ]
+}
