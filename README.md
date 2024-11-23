@@ -2,7 +2,7 @@
 
 Projeto taxi-app para o processo seletivo da shopper.com.br.
 
-## instalaçao 
+## instalação 
 
 Você precisará ter o GIT instalado na sua máquina, e, após isso, clonar este repositório:
 
