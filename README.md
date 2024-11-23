@@ -14,7 +14,7 @@ Você precisará ter o GIT instalado na sua máquina, e, após isso, clonar este
    cd shopper-challenger-taxi-app-backend
 ```
 
-Você precisará ter o Docker e Docker compose na sua máquina, após isso, executar o comando na pasta raiz do projeto
+Você precisará ter o Docker e Docker compose na sua máquina, após isso, executar o comando na pasta raiz do projeto:
 
 ```
     docker compose up
@@ -25,6 +25,10 @@ Você precisará ter o Docker e Docker compose na sua máquina, após isso, exec
 habilitar "Google maps Api" no google cloud
 
 habilitar "Distance Matrix Api" no google cloud
+
+### Variáveis de ambiente
+
+GOOGLE_API_KEY
 
 ### Estrutura do banco de dados
 
