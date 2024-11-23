@@ -58,7 +58,7 @@ retorno esperado:
    rides: [
       {
          id: number,
-         date: datetime,
+         date: Date,
          origin: string,
          destination: string,
          distance: number,
@@ -67,7 +67,7 @@ retorno esperado:
             id: number,
             name: string
          },
-         value": number
+         value: number
       }
    ]
 }
