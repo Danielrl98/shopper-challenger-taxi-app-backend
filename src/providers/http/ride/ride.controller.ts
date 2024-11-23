@@ -25,8 +25,8 @@ export class RideController {
   }
   @Post('estimate')
   @HttpCode(200)
-  createRide(@Body() body: RidesDTO) {
-    return this.rideService.createRide(body);
+  estimeRide(@Body() body: RidesDTO) {
+    return this.rideService.estimateRide(body);
   }
 
   @Patch('confirm')

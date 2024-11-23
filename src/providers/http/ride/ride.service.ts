@@ -23,7 +23,7 @@ export class RideService {
     private readonly reviewsRepository: ReviewsRepository,
     private readonly customersRepository: CustomersRepository,
   ) {}
-  async createRide(ride: IRides): Promise<IRideResponse | HttpException> {
+  async estimateRide(ride: IRides): Promise<IRideResponse | HttpException> {
     const startCoordinates = (await this.googleMaps.getAddressCoordinates(
       ride.origin,
     )) as { coordinates: ICoordinates; response: GeocodeResult };
@@ -58,17 +58,31 @@ export class RideService {
       );
     }
 
-    const driver = driverFilter[0];
+    const optionsDrivers = []
 
-    let valueRide = driver.tax;
+    for(const driver of drivers) {
+      let valueRide = driver.tax;
 
-    for (let i = 0; i < calculateDistance.distance; i++) {
-      if (i % 5 === 0) {
-        valueRide = valueRide + 3.0;
+      for (let i = 0; i < calculateDistance.distance; i++) {
+        if (i % 5 === 0) {
+          valueRide = valueRide + 3.0;
+        }
       }
-    }
+  
+      const review = await this.reviewsRepository.findFirstReview(driver.id);
 
-    const review = await this.reviewsRepository.findFirstReview(driver.id);
+      optionsDrivers.push( {
+        id: driver.id,
+        name: driver.name,
+        description: driver.description,
+        vehicle: driver.car,
+        review: {
+          rating: review.stars ?? 0,
+          comment: review.comment ?? '',
+        },
+        value: valueRide,
+      },)
+    }
 
     const response: IRideResponse = {
       origin: {
@@ -81,23 +95,9 @@ export class RideService {
       },
       distance: calculateDistance.distance,
       duration: calculateDistance.duration,
-      options: [
-        {
-          id: driver.id,
-          name: driver.name,
-          description: driver.description,
-          vehicle: driver.car,
-          review: {
-            rating: review.stars ?? 0,
-            comment: review.comment ?? '',
-          },
-          value: valueRide,
-        },
-      ],
+      options: optionsDrivers,
       routeResponse: startCoordinates.response,
     };
-
-    this.logger.log(`Ride estimated for driver: ${driver.name}`);
 
     return response;
   }
