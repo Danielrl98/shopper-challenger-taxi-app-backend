@@ -167,10 +167,6 @@ export class RideService {
     const allRides =
     await this.ridesRepository.findManyRides(driver_id, customer_id);
 
-    if(allRides.length ===0) {
-      new CustomException("no rides found", HttpStatus.NOT_FOUND, "NO_RIDES_FOUND")
-    }
-
     const rides = []
 
     for(const ride of allRides) {
@@ -187,6 +183,10 @@ export class RideService {
         },
         value: ride.amount,
       })
+    }
+
+    if(rides.length === 0) {
+      new CustomException("no rides found", HttpStatus.NOT_FOUND, "NO_RIDES_FOUND")
     }
 
     return {
