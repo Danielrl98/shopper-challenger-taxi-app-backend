@@ -2,7 +2,7 @@
 
 Projeto taxi-app para o processo seletivo da shopper.com.br.
 
-### instalaçao 
+## instalaçao 
 
 Você precisará ter o GIT instalado na sua máquina, e, após isso, clonar este repositório:
 
@@ -20,7 +20,7 @@ Você precisará ter o Docker e Docker compose na sua máquina, após isso, exec
     docker compose up
 ```
 
-### Requisitos
+## Requisitos
 
 habilitar "Google maps Api" no google cloud
 
@@ -30,26 +30,29 @@ habilitar "Distance Matrix Api" no google cloud
 
 GOOGLE_API_KEY
 
-### Estrutura do banco de dados
+## Estrutura do banco de dados
 
 ![Exemplo de Imagem](./drawSQL.png)
 
-### Endpoints
+## Endpoints
 
-POST /ride/estimate
+### POST /ride/estimate
 
 Descrição: Calcula a rota de um ponto ao outro e retorna os detalhes da corrida.
 
 corpo da requisição:
 
+```sh
 {
    customer_id: number,
    origin: string,
    destination: string,
 }
+```
 
 retorno esperado:
 
+```sh
 {
    customer_id: string,
    rides: [
@@ -68,13 +71,15 @@ retorno esperado:
       }
    ]
 }
+```
 
-PATCH /ride/confirm
+### PATCH /ride/confirm
 
 Descrição: Responsável por confirmar a corrida
 
 corpo da requisição:
 
+```sh
 {
    customer_id: string,
    origin: string,
@@ -87,19 +92,23 @@ corpo da requisição:
    },
    value: number
 }
+```
 
 retorno esperado:
 
+```sh
 {
    success: true
 }
+```
 
-GET /ride/{customer_id}?driver_id={id do motorista}
+### GET /ride/{customer_id}?driver_id={id do motorista}
 
 Descrição: Responsável por lista todas as corridas
 
 Retorno esperado:
 
+```sh
 {
    customer_id: string,
    rides: [
@@ -118,3 +127,4 @@ Retorno esperado:
       }
    ]
 }
+```
