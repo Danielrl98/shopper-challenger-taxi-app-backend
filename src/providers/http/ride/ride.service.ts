@@ -149,7 +149,7 @@ export class RideService {
       throw new CustomException(
         'confirm ride error',
         HttpStatus.NOT_FOUND,
-        "INVALID_DRIVER",
+        'INVALID_DRIVER',
       );
     }
 
@@ -164,12 +164,14 @@ export class RideService {
       );
     }
 
-    const allRides =
-    await this.ridesRepository.findManyRides(driver_id, customer_id);
+    const allRides = await this.ridesRepository.findManyRides(
+      driver_id,
+      customer_id,
+    );
 
-    const rides = []
+    const rides = [];
 
-    for(const ride of allRides) {
+    for (const ride of allRides) {
       rides.push({
         id: ride.id,
         date: ride.created_at,
@@ -182,11 +184,15 @@ export class RideService {
           name: driver.name,
         },
         value: ride.amount,
-      })
+      });
     }
 
-    if(rides.length === 0) {
-      new CustomException("no rides found", HttpStatus.NOT_FOUND, "NO_RIDES_FOUND")
+    if (rides.length === 0) {
+      new CustomException(
+        'no rides found',
+        HttpStatus.NOT_FOUND,
+        'NO_RIDES_FOUND',
+      );
     }
 
     return {

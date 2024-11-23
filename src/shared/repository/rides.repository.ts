@@ -16,12 +16,15 @@ export class RidesRepository {
       // include: { customer: true, driver: true },
     });
   }
-  async findManyRides(driver_id: number, customer_id: number): Promise<IRides[]> {
+  async findManyRides(
+    driver_id: number,
+    customer_id: number,
+  ): Promise<IRides[]> {
     return await prisma.rides.findMany({
       where: {
         driver_id,
-        customer_id
-      }
+        customer_id,
+      },
     });
   }
 
