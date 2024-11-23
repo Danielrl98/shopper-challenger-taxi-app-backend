@@ -149,7 +149,7 @@ export class RideService {
       throw new CustomException(
         'confirm ride error',
         HttpStatus.NOT_FOUND,
-        'DRIVER_NOT_FOUND',
+        "INVALID_DRIVER",
       );
     }
 
