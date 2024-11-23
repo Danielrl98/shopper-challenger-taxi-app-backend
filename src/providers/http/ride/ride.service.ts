@@ -60,7 +60,7 @@ export class RideService {
 
     const optionsDrivers = []
 
-    for(const driver of drivers) {
+    for(const driver of driverFilter) {
       let valueRide = driver.tax;
 
       for (let i = 0; i < calculateDistance.distance; i++) {
