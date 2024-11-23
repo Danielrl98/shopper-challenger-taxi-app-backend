@@ -54,22 +54,30 @@ retorno esperado:
 
 ```sh
 {
-   customer_id: string,
-   rides: [
+   origin:{
+      latitude: number,
+      longitude: number
+   },
+   destination:{
+      latitude: number,
+      longitude: number
+   },
+   distance: number,
+   duration: string,
+   options:[
       {
          id: number,
-         date: Date,
-         origin: string,
-         destination: string,
-         distance: number,
-         duration: string,
-         driver: {
-            id: number,
-            name: string
+         name: string,
+         description: string,
+         vehicle: string,
+         review:{
+            rating: number,
+            comment: string
          },
          value: number
       }
-   ]
+   ],
+   routeResponse: object
 }
 ```
 
