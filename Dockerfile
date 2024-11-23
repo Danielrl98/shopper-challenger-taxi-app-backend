@@ -10,4 +10,4 @@ RUN npm install -g npm@latest
 
 RUN npm install -g @nestjs/cli
 
-EXPOSE 8090
+EXPOSE 8080
