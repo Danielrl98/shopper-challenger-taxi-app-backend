@@ -22,7 +22,7 @@ Você precisará ter o Docker e Docker compose na sua máquina, após isso, exec
 
 ## Requisitos
 
-habilitar "Google maps Api" no google cloud
+habilitar "Google Maps Api" no google cloud
 
 habilitar "Distance Matrix Api" no google cloud
 
@@ -32,7 +32,7 @@ GOOGLE_API_KEY
 
 ## Estrutura do banco de dados
 
-![Exemplo de Imagem](./drawSQL.png)
+![Banco de dados](./public/drawSQL.png)
 
 ## Endpoints
 
