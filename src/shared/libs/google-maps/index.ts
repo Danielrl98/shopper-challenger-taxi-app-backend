@@ -7,7 +7,7 @@ import { CustomException } from '../../../shared/common';
 const client = new Client({});
 
 export class GoogleMaps {
-  constructor(private readonly Logger: Logger) {}
+  constructor(private readonly logger: Logger) {}
   async getAddressCoordinates(address: string) {
     try {
       const response = await client.geocode({
@@ -19,8 +19,9 @@ export class GoogleMaps {
         response: GeocodeResult;
       };
     } catch (error) {
+      this.logger.error(error?.message || 'internal error');
       throw new CustomException(
-        error?.message ?? 'error route',
+        'route not found',
         HttpStatus.BAD_REQUEST,
         'ROUTE_NOT_FOUND',
       );
@@ -49,8 +50,9 @@ export class GoogleMaps {
 
       return { distance, duration: this.formatToHours(duration) };
     } catch (error) {
+      this.logger.error(error?.message || 'internal error');
       throw new CustomException(
-        error?.message ?? 'error route',
+        'route not found',
         HttpStatus.BAD_REQUEST,
         'ROUTE_NOT_FOUND',
       );
