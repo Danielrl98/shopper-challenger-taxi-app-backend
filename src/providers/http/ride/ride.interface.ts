@@ -6,7 +6,10 @@ export interface IRideResponse {
   distance: number;
   duration: string;
   options: Option[];
-  routeResponse: GeocodeResult;
+  routeResponse: {
+    start: GeocodeResult,
+    end: GeocodeResult
+  };
 }
 
 export interface Coordinates {

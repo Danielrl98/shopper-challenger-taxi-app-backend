@@ -98,7 +98,10 @@ export class RideService {
       distance: calculateDistance.distance,
       duration: calculateDistance.duration,
       options: optionsDrivers,
-      routeResponse: startCoordinates.response,
+      routeResponse: {
+        start: startCoordinates.response,
+        end: endCoordinates.response
+      },
     };
 
     return response;
